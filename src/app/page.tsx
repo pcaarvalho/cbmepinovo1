@@ -1,103 +1,218 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Search, FileText, ArrowRight } from 'lucide-react';
+
+// Dados das categorias
+const CATEGORIAS_IT = [
+  { id: 'geral', nome: 'Procedimentos Gerais', icone: '📋', count: 15 },
+  { id: 'saidas', nome: 'Saídas de Emergência', icone: '🚪', count: 8 },
+  { id: 'iluminacao', nome: 'Iluminação e Sinalização', icone: '💡', count: 12 },
+  { id: 'extintores', nome: 'Sistemas de Extintores', icone: '🧯', count: 10 },
+  { id: 'hidrantes', nome: 'Sistemas de Hidrantes', icone: '🚰', count: 7 },
+  { id: 'diversos', nome: 'Diversos', icone: '📝', count: 20 }
+];
+
+// ITs mais populares
+const ITS_POPULARES = [
+  { id: 'IT-001', numero: 'IT-001/2019', titulo: 'Procedimentos Administrativos', descricao: 'Estabelece critérios para tramitação de processos' },
+  { id: 'IT-008', numero: 'IT-008/2019', titulo: 'Saídas de Emergência', descricao: 'Dimensionamento e características das saídas' },
+  { id: 'IT-018', numero: 'IT-018/2019', titulo: 'Iluminação de Emergência', descricao: 'Sistemas de iluminação e sinalização de emergência' },
+  { id: 'IT-021', numero: 'IT-021/2019', titulo: 'Sistema de Proteção por Extintores', descricao: 'Instalação e manutenção de extintores' }
+];
+
+// Componente para card de categoria
+function CategoryCard({ categoria }: { categoria: typeof CATEGORIAS_IT[0] }) {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6 text-center space-y-4 hover:shadow-md transition-shadow cursor-pointer">
+      <div className="text-4xl">{categoria.icone}</div>
+      <h3 className="text-xl font-semibold text-gray-900">{categoria.nome}</h3>
+      <div className="text-sm text-red-600 font-medium">
+        {categoria.count} instruções
+      </div>
+    </div>
+  );
+}
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+// Componente para card de IT
+function ITCard({ instrucao }: { instrucao: typeof ITS_POPULARES[0] }) {
+  return (
+    <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6 hover:shadow-md transition-shadow cursor-pointer">
+      <div className="space-y-4">
+        <div className="flex items-start justify-between">
+          <div className="flex-1">
+            <div className="text-sm font-medium text-red-600 mb-1">
+              {instrucao.numero}
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              {instrucao.titulo}
+            </h3>
+            <p className="text-gray-600 text-sm">
+              {instrucao.descricao}
+            </p>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+    </div>
+  );
+}
+
+export default function HomePage() {
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = (query: string) => {
+    if (query.trim()) {
+      router.push(`/pesquisar?q=${encodeURIComponent(query.trim())}`);
+    }
+  };
+
+  return (
+    <div className="space-y-16 pb-16">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-red-600 to-red-800 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="text-center space-y-8">
+            <h1 className="text-4xl md:text-6xl font-bold">
+              Instruções Técnicas
+              <span className="block text-red-200">CB-PI</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-red-100 max-w-3xl mx-auto">
+              Sistema inteligente de consulta às Instruções Técnicas do Corpo de Bombeiros do Piauí
+              com análise de conformidade de memoriais descritivos
+            </p>
+            
+            {/* Search Input Simples */}
+            <div className="max-w-2xl mx-auto">
+              <div className="bg-white rounded-lg p-4 shadow-lg">
+                <div className="flex items-center space-x-3">
+                  <Search className="w-5 h-5 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Pesquise por instruções técnicas..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && handleSearch(searchTerm)}
+                    className="flex-1 text-gray-900 placeholder-gray-500 border-0 focus:ring-0 focus:outline-none"
+                  />
+                  <button
+                    onClick={() => handleSearch(searchTerm)}
+                    className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                  >
+                    Buscar
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <button
+                onClick={() => router.push('/pesquisar')}
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-red-600 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              >
+                <Search className="w-5 h-5 mr-2" />
+                Explorar Todas as ITs
+              </button>
+              <button
+                onClick={() => router.push('/memorial')}
+                className="inline-flex items-center px-6 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+              >
+                <FileText className="w-5 h-5 mr-2" />
+                Analisar Memorial
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Categories Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center space-y-4 mb-12">
+          <h2 className="text-3xl font-bold text-gray-900">Categorias de ITs</h2>
+          <p className="text-xl text-gray-600">
+            Explore as instruções técnicas organizadas por categoria
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {CATEGORIAS_IT.map((categoria) => (
+            <CategoryCard key={categoria.id} categoria={categoria} />
+          ))}
+        </div>
+      </section>
+
+      {/* Popular ITs Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h2 className="text-3xl font-bold text-gray-900">
+              ITs Mais Consultadas
+            </h2>
+            <p className="text-xl text-gray-600 mt-2">
+              As instruções técnicas mais acessadas pelos usuários
+            </p>
+          </div>
+          <button
+            onClick={() => router.push('/biblioteca')}
+            className="hidden sm:inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+          >
+            Ver Todas
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {ITS_POPULARES.map((it) => (
+            <ITCard key={it.id} instrucao={it} />
+          ))}
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="text-center space-y-4 mb-12">
+            <h2 className="text-3xl font-bold text-gray-900">Recursos Disponíveis</h2>
+            <p className="text-xl text-gray-600">
+              Ferramentas para facilitar o trabalho com as Instruções Técnicas
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto">
+                <Search className="w-8 h-8 text-red-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">Busca Inteligente</h3>
+              <p className="text-gray-600">
+                Encontre rapidamente as ITs usando linguagem natural ou palavras-chave específicas
+              </p>
+            </div>
+
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto">
+                <FileText className="w-8 h-8 text-red-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">Análise de Memorial</h3>
+              <p className="text-gray-600">
+                Faça upload de memoriais descritivos e receba análise automatizada de conformidade
+              </p>
+            </div>
+
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto">
+                <FileText className="w-8 h-8 text-red-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">Biblioteca Organizada</h3>
+              <p className="text-gray-600">
+                Acesse todas as ITs organizadas por categoria com visualizador integrado
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

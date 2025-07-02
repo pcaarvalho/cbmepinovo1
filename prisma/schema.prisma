@@ -1,0 +1,536 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==============================================================================
+// AUDIT TRAIL & MULTI-TENANCY
+// ==============================================================================
+
+model Organization {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  domain      String?  @unique
+  logo        String?
+  settings    Json     @default("{}")
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  users       User[]
+  roles       Role[]
+  instructions InstrucaoTecnica[]
+  analyses    ResultadoAnalise[]
+  auditLogs   AuditLog[]
+  subscriptions Subscription[]
+  searchHistory SearchHistory[]
+  searchGroups SearchGroup[]
+
+  @@map("organizations")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  name          String
+  avatar        String?
+  position      String?
+  department    String?
+  isActive      Boolean   @default(true)
+  lastLoginAt   DateTime?
+  loginCount    Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Multi-tenancy
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  // Relations
+  userRoles     UserRole[]
+  analyses      ResultadoAnalise[]
+  comments      Comment[]
+  annotations   Annotation[]
+  auditLogs     AuditLog[]
+  notifications Notification[]
+  sessions      Session[]
+  favorites     Favorite[]
+  searchHistory SearchHistory[]
+  searchGroups  SearchGroup[]
+  
+  @@map("users")
+}
+
+model Role {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  permissions Json     @default("[]")
+  isSystem    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Multi-tenancy
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  // Relations
+  userRoles UserRole[]
+
+  @@unique([organizationId, name])
+  @@map("roles")
+}
+
+model UserRole {
+  id     String @id @default(uuid())
+  userId String
+  roleId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, roleId])
+  @@map("user_roles")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  ipAddress String?
+  userAgent String?
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+// ==============================================================================
+// CORE DOMAIN MODELS
+// ==============================================================================
+
+model InstrucaoTecnica {
+  id              String   @id @default(uuid())
+  numero          String
+  titulo          String
+  descricao       String   @db.Text
+  categoria       String
+  subcategoria    String?
+  conteudo        String   @db.Text
+  versao          String   @default("1.0")
+  dataPublicacao  DateTime
+  ultimaRevisao   DateTime
+  proximaRevisao  DateTime?
+  arquivo         String
+  tamanhoArquivo  Int?
+  hashArquivo     String?
+  tags            String[]
+  palavrasChave   String[]
+  popular         Boolean  @default(false)
+  visualizacoes   Int      @default(0)
+  downloads       Int      @default(0)
+  isActive        Boolean  @default(true)
+  metadata        Json     @default("{}")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Multi-tenancy
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  // SEO and Search
+  slug            String
+  metaTitle       String?
+  metaDescription String?
+  searchVector    String? // For full-text search
+
+  // Relations
+  analyses    ResultadoAnalise[]
+  comments    Comment[]
+  annotations Annotation[]
+  favorites   Favorite[]
+  
+  @@unique([organizationId, numero])
+  @@unique([organizationId, slug])
+  @@map("instrucoes_tecnicas")
+}
+
+model ResultadoAnalise {
+  id               String   @id @default(uuid())
+  nomeArquivo      String
+  tamanhoArquivo   Int?
+  hashArquivo      String?
+  dataAnalise      DateTime @default(now())
+  conformidade     Float    // Percentage 0-100
+  status           AnalysisStatus
+  observacoes      String?  @db.Text
+  tempoProcessamento Int?   // in milliseconds
+  versaoAlgoritmo String?
+  metadados        Json     @default("{}")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relations
+  userId     String
+  user       User   @relation(fields: [userId], references: [id])
+  
+  instructionId String?
+  instruction   InstrucaoTecnica? @relation(fields: [instructionId], references: [id])
+
+  // Multi-tenancy
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  itensVerificados ItemVerificacao[]
+  comments         Comment[]
+
+  @@map("resultados_analise")
+}
+
+model ItemVerificacao {
+  id           String            @id @default(uuid())
+  item         String
+  resultado    VerificationResult
+  observacao   String?           @db.Text
+  itReferencia String?
+  severidade   Severity          @default(MEDIUM)
+  linha        Int?
+  coluna       Int?
+  contexto     String?
+  sugestao     String?
+  createdAt    DateTime          @default(now())
+
+  // Relations
+  analiseId String
+  analise   ResultadoAnalise @relation(fields: [analiseId], references: [id], onDelete: Cascade)
+
+  @@map("itens_verificacao")
+}
+
+// ==============================================================================
+// COLLABORATION & SOCIAL FEATURES
+// ==============================================================================
+
+model Comment {
+  id        String   @id @default(uuid())
+  content   String   @db.Text
+  isResolved Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  instructionId String?
+  instruction   InstrucaoTecnica? @relation(fields: [instructionId], references: [id])
+
+  analysisId String?
+  analysis   ResultadoAnalise? @relation(fields: [analysisId], references: [id])
+
+  parentId String?
+  parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies  Comment[] @relation("CommentReplies")
+
+  @@map("comments")
+}
+
+model Annotation {
+  id        String   @id @default(uuid())
+  content   String   @db.Text
+  position  Json     // { page: number, x: number, y: number, width: number, height: number }
+  color     String   @default("#FFD700")
+  isPrivate Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  instructionId String
+  instruction   InstrucaoTecnica @relation(fields: [instructionId], references: [id], onDelete: Cascade)
+
+  @@map("annotations")
+}
+
+model Favorite {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  instructionId String
+  instruction   InstrucaoTecnica @relation(fields: [instructionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, instructionId])
+  @@map("favorites")
+}
+
+// ==============================================================================
+// NOTIFICATIONS & SUBSCRIPTIONS
+// ==============================================================================
+
+model Notification {
+  id        String           @id @default(uuid())
+  title     String
+  message   String           @db.Text
+  type      NotificationType
+  data      Json             @default("{}")
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+model Subscription {
+  id        String             @id @default(uuid())
+  type      SubscriptionType
+  filter    Json               @default("{}")
+  isActive  Boolean            @default(true)
+  createdAt DateTime           @default(now())
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@map("subscriptions")
+}
+
+// ==============================================================================
+// ANALYTICS & MONITORING
+// ==============================================================================
+
+model AuditLog {
+  id         String    @id @default(uuid())
+  action     String
+  resource   String
+  resourceId String?
+  oldValues  Json?
+  newValues  Json?
+  ipAddress  String?
+  userAgent  String?
+  metadata   Json      @default("{}")
+  createdAt  DateTime  @default(now())
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([action, resource])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+model Analytics {
+  id        String   @id @default(uuid())
+  event     String
+  data      Json     @default("{}")
+  userId    String?
+  sessionId String?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@index([event])
+  @@index([createdAt])
+  @@map("analytics")
+}
+
+// ==============================================================================
+// SEARCH ANALYTICS & HISTORY
+// ==============================================================================
+
+model SearchHistory {
+  id            String   @id @default(uuid())
+  query         String
+  filters       Json     @default("{}")
+  resultsCount  Int      @default(0)
+  duration      Int?     // em milissegundos
+  clicked       Boolean  @default(false)
+  clickedResult String?  // ID do resultado clicado
+  sessionId     String?
+  ipAddress     String?
+  userAgent     String?
+  metadata      Json     @default("{}")
+  createdAt     DateTime @default(now())
+
+  // Relations
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  // Agrupamento inteligente
+  searchGroupId String?
+  searchGroup   SearchGroup? @relation(fields: [searchGroupId], references: [id])
+
+  @@index([query])
+  @@index([userId, createdAt])
+  @@index([sessionId])
+  @@index([createdAt])
+  @@map("search_history")
+}
+
+model SearchGroup {
+  id          String   @id @default(uuid())
+  topic       String   // Tópico identificado (ex: "saidas_emergencia", "iluminacao")
+  keywords    String[] // Palavras-chave relacionadas
+  description String?  // Descrição automática do grupo
+  frequency   Int      @default(1)
+  lastUsed    DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  // Relations
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  searches SearchHistory[]
+
+  @@index([userId, topic])
+  @@index([lastUsed])
+  @@map("search_groups")
+}
+
+model SearchTerm {
+  id            String   @id @default(uuid())
+  term          String   @unique
+  frequency     Int      @default(1)
+  clickRate     Float    @default(0.0) // Taxa de clique (0.0 a 1.0)
+  avgResults    Float    @default(0.0) // Média de resultados retornados
+  avgDuration   Float    @default(0.0) // Tempo médio de busca em ms
+  successRate   Float    @default(0.0) // Taxa de sucesso (buscas que resultaram em clique)
+  lastUsed      DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Categorização automática
+  category      String?  // ex: "seguranca", "iluminacao", "hidrantes"
+  relatedTerms  String[] // Termos relacionados identificados automaticamente
+
+  @@index([frequency desc])
+  @@index([successRate desc])
+  @@index([lastUsed])
+  @@map("search_terms")
+}
+
+model SearchSuggestion {
+  id          String              @id @default(uuid())
+  query       String
+  suggestion  String
+  type        SearchSuggestionType
+  score       Float               @default(0.0) // Pontuação de relevância
+  metadata    Json                @default("{}")
+  isActive    Boolean             @default(true)
+  usage       Int                 @default(0) // Quantas vezes foi usada
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  @@index([query])
+  @@index([score desc])
+  @@map("search_suggestions")
+}
+
+// ==============================================================================
+// SYSTEM CONFIGURATION
+// ==============================================================================
+
+model SystemConfig {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt
+
+  @@map("system_config")
+}
+
+model HealthCheck {
+  id        String           @id @default(uuid())
+  service   String
+  status    HealthStatus
+  latency   Int?
+  metadata  Json             @default("{}")
+  createdAt DateTime         @default(now())
+
+  @@index([service, createdAt])
+  @@map("health_checks")
+}
+
+// ==============================================================================
+// ENUMS
+// ==============================================================================
+
+enum AnalysisStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum VerificationResult {
+  CONFORME
+  NAO_CONFORME
+  NAO_APLICAVEL
+  PARCIAL
+  PENDENTE
+}
+
+enum Severity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum NotificationType {
+  INFO
+  WARNING
+  ERROR
+  SUCCESS
+  SYSTEM
+}
+
+enum SubscriptionType {
+  NEW_INSTRUCTION
+  INSTRUCTION_UPDATE
+  ANALYSIS_COMPLETE
+  SYSTEM_ALERT
+}
+
+enum HealthStatus {
+  HEALTHY
+  DEGRADED
+  DOWN
+}
+
+enum SearchSuggestionType {
+  AUTOCOMPLETE
+  RELATED_SEARCH
+  POPULAR_TERM
+  CONTEXTUAL
+  TYPO_CORRECTION
+}
