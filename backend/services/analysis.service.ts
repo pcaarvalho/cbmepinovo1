@@ -1,7 +1,7 @@
 import { PDFService } from '@/backend/external/storage/pdf.service';
 import { AnalysisRepository } from '@/backend/repositories/analysis.repository';
 import { ComplianceEngine } from '@/backend/services/analysis/compliance.engine';
-import { ResultadoAnalise, ItemVerificacao } from '@/shared/types/analysis';
+import { ResultadoAnalise, ItemVerificacao, AnalysisStatus } from '@/shared/types/analysis';
 
 export class AnalysisService {
   private pdfService: PDFService;
@@ -42,7 +42,7 @@ export class AnalysisService {
         hashArquivo: await this.generateFileHash(file),
         dataAnalise: new Date().toISOString(),
         conformidade,
-        status: 'COMPLETED',
+        status: AnalysisStatus.COMPLETED,
         observacoes,
         tempoProcessamento: Date.now() - startTime,
         versaoAlgoritmo: '1.0.0',

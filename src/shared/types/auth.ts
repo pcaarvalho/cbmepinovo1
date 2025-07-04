@@ -1,7 +1,9 @@
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 // ==============================================================================
 // TYPES - AUTH & USERS DOMAIN
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface User {
   id: string;
   email: string;
@@ -20,6 +22,7 @@ export interface User {
   updatedAt: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface Organization {
   id: string;
   name: string;
@@ -33,6 +36,7 @@ export interface Organization {
   updatedAt: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface OrganizationSettings {
   features: {
     analytics: boolean;
@@ -53,6 +57,7 @@ export interface OrganizationSettings {
   };
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface Role {
   id: string;
   name: string;
@@ -64,6 +69,7 @@ export interface Role {
   updatedAt: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface UserRole {
   id: string;
   userId: string;
@@ -72,6 +78,7 @@ export interface UserRole {
   createdAt: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface Permission {
   id: string;
   name: string;
@@ -80,6 +87,7 @@ export interface Permission {
   action: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface Session {
   id: string;
   userId: string;
@@ -90,6 +98,7 @@ export interface Session {
   createdAt: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface Subscription {
   id: string;
   type: SubscriptionType;
@@ -99,6 +108,7 @@ export interface Subscription {
   createdAt: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export enum UserRoleType {
   SUPER_ADMIN = 'SUPER_ADMIN',
   ORG_ADMIN = 'ORG_ADMIN',
@@ -107,6 +117,7 @@ export enum UserRoleType {
   VIEWER = 'VIEWER'
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export enum PermissionType {
   // Instructions
   INSTRUCTIONS_READ = 'INSTRUCTIONS_READ',
@@ -134,9 +145,12 @@ export enum PermissionType {
   AUDIT_LOGS = 'AUDIT_LOGS'
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export enum SubscriptionType {
   NEW_INSTRUCTION = 'NEW_INSTRUCTION',
   INSTRUCTION_UPDATE = 'INSTRUCTION_UPDATE',
   ANALYSIS_COMPLETE = 'ANALYSIS_COMPLETE',
   SYSTEM_ALERT = 'SYSTEM_ALERT'
 }
+
+// ✔️ Protegido com AIDEV-PROTECTED

@@ -1,4 +1,5 @@
 import { AIService } from '@/backend/external/ai/ai.service';
+import { EnhancedAIService } from '../../src/backend/services/enhanced-ai.service';
 import { CacheService } from '@/backend/external/storage/cache.service';
 import { SearchRepository } from '@/backend/repositories/search.repository';
 import { InstructionsRepository } from '@/backend/repositories/instructions.repository';
@@ -6,12 +7,14 @@ import { SearchRequest, SearchResponse, AISearchRequest } from '@/shared/types/s
 
 export class SearchService {
   private aiService: AIService;
+  private enhancedAI: EnhancedAIService;
   private cacheService: CacheService;
   private searchRepo: SearchRepository;
   private instructionsRepo: InstructionsRepository;
 
   constructor() {
     this.aiService = new AIService();
+    this.enhancedAI = new EnhancedAIService();
     this.cacheService = new CacheService();
     this.searchRepo = new SearchRepository();
     this.instructionsRepo = new InstructionsRepository();
@@ -85,12 +88,32 @@ export class SearchService {
 
       const searchResult = await this.performSearch(searchRequest);
 
+      // Melhorar resultados com IA
+      const enhancedResults = await this.enhancedAI.enhanceSearchResults(searchResult.results);
+      
+      // Gerar resposta inteligente
+      const smartResponse = await this.enhancedAI.generateSmartResponse(
+        request.prompt,
+        enhancedResults
+      );
+
       // Adicionar contexto da AI
       return {
         ...searchResult,
+        results: enhancedResults,
         aiAnalysis: aiAnalysis.explanation,
+        aiResponse: smartResponse.insights,
         confidence: aiAnalysis.confidence,
         processingTime: Date.now() - startTime,
+        totalResults: enhancedResults.length,
+        data: {
+          results: enhancedResults,
+          totalResults: enhancedResults.length,
+          aiResponse: smartResponse.insights,
+          summary: smartResponse.summary,
+          recommendations: smartResponse.recommendations,
+          contextualInfo: smartResponse.contextualInfo
+        }
       };
     } catch (error) {
       console.error('Error in performAISearch:', error);

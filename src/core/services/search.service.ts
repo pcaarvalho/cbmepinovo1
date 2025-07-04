@@ -1,9 +1,11 @@
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 import { AIService } from '@/backend/external/ai/ai.service';
 import { CacheService } from '@/backend/external/storage/cache.service';
 import { SearchRepository } from '@/backend/repositories/search.repository';
 import { InstructionsRepository } from '@/backend/repositories/instructions.repository';
 import { SearchRequest, SearchResponse, AISearchRequest } from '@/shared/types/search';
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export class SearchService {
   private aiService: AIService;
   private cacheService: CacheService;
@@ -17,6 +19,7 @@ export class SearchService {
     this.instructionsRepo = new InstructionsRepository();
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async performSearch(request: SearchRequest): Promise<SearchResponse> {
     try {
       const startTime = Date.now();
@@ -66,6 +69,7 @@ export class SearchService {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async performAISearch(request: AISearchRequest): Promise<SearchResponse> {
     try {
       const startTime = Date.now();
@@ -103,6 +107,7 @@ export class SearchService {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async getSuggestions(query: string): Promise<string[]> {
     try {
       if (query.length < 2) {
@@ -130,6 +135,7 @@ export class SearchService {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   private async generateSuggestions(query: string): Promise<string[]> {
     try {
       // Buscar sugestões baseadas em termos populares
@@ -156,6 +162,7 @@ export class SearchService {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   private generateCacheKey(request: SearchRequest): string {
     return `search:${JSON.stringify({
       query: request.query,
@@ -165,6 +172,7 @@ export class SearchService {
     })}`;
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   private async recordSearchEvent(
     request: SearchRequest, 
     response: SearchResponse, 
@@ -184,3 +192,5 @@ export class SearchService {
     }
   }
 }
+
+// ✔️ Protegido com AIDEV-PROTECTED

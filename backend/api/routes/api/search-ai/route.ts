@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { rateLimit } from '@/lib/rate-limit';
-import { searchCache } from '@/lib/search-cache';
-import { openRouterClient } from '@/lib/openrouter-client';
+import { searchCache } from '@/infrastructure/storage/search-cache';
+import { openRouterClient } from '@/infrastructure/ai/openrouter-client';
 import { validateSearchRequest } from '@/lib/validations/search-validation';
 import { MOCK_IT_CONTENT } from '@/lib/data/mock-instructions';
 

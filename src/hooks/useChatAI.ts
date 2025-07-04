@@ -136,14 +136,52 @@ export function useChatAI(): ChatAIHookReturn {
     setIsLoading(true);
 
     try {
+      // Gerar knowledge base das ITs
+      const generateKnowledgeBase = () => {
+        return `INSTRUÇÕES TÉCNICAS DO CBMEPI:
+
+INSTRUÇÕES PRINCIPAIS POR TEMA:
+• Extintores: IT-21 (Sistema de proteção por extintores de incêndio)  
+• Hidrantes: IT-22 (Sistema de hidrantes e mangotinhos), IT-34 (Hidrante urbano)
+• Saídas: IT-11 (Saídas de emergência)
+• Iluminação: IT-18 (Iluminação de emergência)
+• Sinalização: IT-20 (Sinalização de emergência)
+• Estrutural: IT-08 (Segurança estrutural)
+• Compartimentação: IT-09 (Compartimentação horizontal e vertical)`;
+      };
+
       const response = await fetch('/api/chat-ai', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: messageText,
-          context: messages.slice(-6) // Últimas 6 mensagens para contexto
+          messages: [
+            {
+              role: 'system',
+              content: `Você é um especialista em normas técnicas do Corpo de Bombeiros do Piauí (CBMEPI).
+
+${generateKnowledgeBase()}
+
+INSTRUÇÕES:
+1. Sempre cite a IT específica (ex: "Segundo a IT-21...")
+2. Use linguagem técnica mas clara
+3. Forneça informações práticas e aplicáveis
+4. Quando não souber algo específico, seja honesto
+5. Priorize segurança e conformidade normativa
+6. Sugira consultar a IT completa quando necessário
+
+Responda SEMPRE em português brasileiro.`
+            },
+            ...messages.filter(msg => msg.role !== 'assistant' || msg.id === 'welcome').slice(-5).map(msg => ({
+              role: msg.role,
+              content: msg.content
+            })),
+            {
+              role: 'user',
+              content: messageText
+            }
+          ]
         })
       });
 
@@ -151,16 +189,28 @@ export function useChatAI(): ChatAIHookReturn {
         throw new Error(`Erro HTTP: ${response.status}`);
       }
 
-      const data: ChatResponse = await response.json();
+      const data = await response.json();
 
-      if (data.success && data.data) {
+      if (data.success) {
+        // Função para extrair referências de ITs das respostas
+        const extractITReferences = (text: string): string[] => {
+          const matches = text.match(/IT-\d+/g);
+          return matches ? [...new Set(matches)] : [];
+        };
+
         // Atualizar mensagem com resposta real
         setMessages(prev => prev.map(msg => 
           msg.id === assistantMsgId 
             ? {
                 ...msg,
-                content: data.data!.response,
-                sources: data.data!.sources,
+                content: data.message || 'Desculpe, não consegui processar sua pergunta.',
+                sources: extractITReferences(data.message || '').map(ref => ({
+                  id: ref,
+                  titulo: ref,
+                  categoria: 'IT',
+                  relevancia: 1,
+                  numero: ref.replace('IT-', '')
+                })),
                 loading: false
               }
             : msg

@@ -1,4 +1,4 @@
-import { ResultadoAnalise } from '@/shared/types/analysis';
+import { ResultadoAnalise, AnalysisStatus } from '@/shared/types/analysis';
 
 export class AnalysisRepository {
 
@@ -22,7 +22,7 @@ export class AnalysisRepository {
         hashArquivo: 'abc123hash',
         dataAnalise: new Date().toISOString(),
         conformidade: 85,
-        status: 'COMPLETED',
+        status: AnalysisStatus.COMPLETED,
         observacoes: 'Análise concluída com sucesso',
         tempoProcessamento: 15000,
         versaoAlgoritmo: '1.0.0',
@@ -55,7 +55,7 @@ export class AnalysisRepository {
         tamanhoArquivo: 1024000,
         dataAnalise: new Date().toISOString(),
         conformidade: 78,
-        status: 'COMPLETED',
+        status: AnalysisStatus.COMPLETED,
         observacoes: 'Algumas não conformidades encontradas',
         tempoProcessamento: 12000,
         versaoAlgoritmo: '1.0.0',
@@ -73,7 +73,7 @@ export class AnalysisRepository {
         tamanhoArquivo: 2048000,
         dataAnalise: new Date().toISOString(),
         conformidade: 92,
-        status: 'COMPLETED',
+        status: AnalysisStatus.COMPLETED,
         observacoes: 'Análise aprovada com poucas observações',
         tempoProcessamento: 8000,
         versaoAlgoritmo: '1.0.0',

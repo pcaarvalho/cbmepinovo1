@@ -1,9 +1,11 @@
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 import { todasInstrucoes } from './data';
 import { ItemVerificacao, VerificationResult, Severity, InstrucaoTecnica } from '@/types';
 import { executeComplianceRules, getAnalysisStats } from './compliance-rules';
-import { extractDocumentContent, ExtractedContent } from './pdf-extractor';
+import { extractDocumentContent, ExtractedContent } from '@/infrastructure/storage/pdf-extractor';
 import { performAdvancedSemanticAnalysis, analyzeDocumentContext } from './semantic-analyzer';
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 // Patterns regex para identificação de elementos técnicos
 const PATTERNS = {
   responsavelTecnico: /(?:respons[aá]vel\s+t[eé]cnico|rt\s*:|engenheiro|arquiteto|crea\s*n[º°]?)\s*[:\-]?\s*([^\n\r]+)/gi,
@@ -20,6 +22,7 @@ const PATTERNS = {
   brigada: /brigada\s*[:\-]?\s*([^\n\r]+)/gi
 };
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 // Base de conhecimento de requisitos das ITs
 const IT_REQUIREMENTS = {
   'IT-001': {
@@ -122,6 +125,7 @@ function calculateTextSimilarity(text1: string, text2: string): number {
   return dotProduct / (magnitude1 * magnitude2) || 0;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 // Função principal de análise - VERSÃO ULTRATHINK AVANÇADA
 export async function analyzeMemorial(file: File): Promise<{
   conformidade: number;
@@ -310,8 +314,11 @@ async function performSemanticAnalysis(
   return semanticItems;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 // Função auxiliar para melhorar a análise com regras específicas
 export function addCustomRules(customRules: Record<string, unknown>) {
   // Permitir adicionar regras customizadas em runtime
   Object.assign(IT_REQUIREMENTS, customRules);
 }
+
+// ✔️ Protegido com AIDEV-PROTECTED

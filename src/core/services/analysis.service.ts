@@ -1,8 +1,10 @@
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 import { PDFService } from '@/backend/external/storage/pdf.service';
 import { AnalysisRepository } from '@/backend/repositories/analysis.repository';
 import { ComplianceEngine } from '@/backend/services/analysis/compliance.engine';
-import { ResultadoAnalise, ItemVerificacao } from '@/shared/types/analysis';
+import { ResultadoAnalise, ItemVerificacao, AnalysisStatus } from '@/shared/types/analysis';
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export class AnalysisService {
   private pdfService: PDFService;
   private analysisRepo: AnalysisRepository;
@@ -14,6 +16,7 @@ export class AnalysisService {
     this.complianceEngine = new ComplianceEngine();
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async analyzeDocument(file: File): Promise<ResultadoAnalise> {
     try {
       const startTime = Date.now();
@@ -42,7 +45,7 @@ export class AnalysisService {
         hashArquivo: await this.generateFileHash(file),
         dataAnalise: new Date().toISOString(),
         conformidade,
-        status: 'COMPLETED',
+        status: AnalysisStatus.COMPLETED,
         observacoes,
         tempoProcessamento: Date.now() - startTime,
         versaoAlgoritmo: '1.0.0',
@@ -71,6 +74,7 @@ export class AnalysisService {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async getAnalysisById(id: string): Promise<ResultadoAnalise | null> {
     try {
       return await this.analysisRepo.findById(id);
@@ -80,6 +84,7 @@ export class AnalysisService {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async getAnalysisHistory(params: {
     userId?: string | null;
     limit: number;
@@ -93,6 +98,7 @@ export class AnalysisService {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async deleteAnalysis(id: string, userId: string): Promise<void> {
     try {
       const analysis = await this.analysisRepo.findById(id);
@@ -112,6 +118,7 @@ export class AnalysisService {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   private calculateCompliancePercentage(items: ItemVerificacao[]): number {
     if (items.length === 0) return 0;
 
@@ -122,6 +129,7 @@ export class AnalysisService {
     return Math.round((conformeItems / items.length) * 100);
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   private generateObservations(items: ItemVerificacao[]): string {
     const naoConformes = items.filter(item => item.resultado === 'NAO_CONFORME');
     const criticos = naoConformes.filter(item => item.severidade === 'CRITICAL');
@@ -154,10 +162,12 @@ export class AnalysisService {
     return observacoes;
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   private generateAnalysisId(): string {
     return `analysis_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   private async generateFileHash(file: File): Promise<string> {
     const arrayBuffer = await file.arrayBuffer();
     const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
@@ -165,3 +175,5 @@ export class AnalysisService {
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
   }
 }
+
+// ✔️ Protegido com AIDEV-PROTECTED

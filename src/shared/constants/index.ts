@@ -1,7 +1,9 @@
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 // ==============================================================================
 // APPLICATION CONSTANTS
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export const APP_CONFIG = {
   NAME: 'CB-PI Instruções Técnicas',
   VERSION: '2.0.0',
@@ -9,6 +11,7 @@ export const APP_CONFIG = {
   BASE_URL: process.env.SITE_URL || 'http://localhost:3000',
 } as const;
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export const API_CONFIG = {
   BASE_PATH: '/api',
   TIMEOUT: 30000,
@@ -16,6 +19,7 @@ export const API_CONFIG = {
   CACHE_TTL: 300, // 5 minutes
 } as const;
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export const SEARCH_CONFIG = {
   MIN_QUERY_LENGTH: 2,
   MAX_RESULTS: 50,
@@ -24,12 +28,14 @@ export const SEARCH_CONFIG = {
   DEBOUNCE_DELAY: 300,
 } as const;
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export const ANALYSIS_CONFIG = {
   MAX_FILE_SIZE: 10 * 1024 * 1024, // 10MB
   SUPPORTED_FORMATS: ['pdf', 'doc', 'docx'],
   PROCESSING_TIMEOUT: 60000, // 1 minute
 } as const;
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export const CATEGORIES = {
   GERAL: 'Procedimentos Gerais',
   SAIDAS: 'Saídas de Emergência',
@@ -39,6 +45,7 @@ export const CATEGORIES = {
   DIVERSOS: 'Diversos',
 } as const;
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export const SEVERITY_LABELS = {
   LOW: 'Baixa',
   MEDIUM: 'Média',
@@ -46,6 +53,7 @@ export const SEVERITY_LABELS = {
   CRITICAL: 'Crítica',
 } as const;
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export const STATUS_LABELS = {
   PENDING: 'Pendente',
   PROCESSING: 'Processando',
@@ -54,6 +62,7 @@ export const STATUS_LABELS = {
   CANCELLED: 'Cancelado',
 } as const;
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export const VERIFICATION_RESULT_LABELS = {
   CONFORME: 'Conforme',
   NAO_CONFORME: 'Não Conforme',
@@ -62,6 +71,7 @@ export const VERIFICATION_RESULT_LABELS = {
   PENDENTE: 'Pendente',
 } as const;
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export const ROUTES = {
   HOME: '/',
   SEARCH: '/pesquisar',
@@ -77,6 +87,7 @@ export const ROUTES = {
   },
 } as const;
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export const COLORS = {
   PRIMARY: '#dc2626', // red-600
   PRIMARY_DARK: '#991b1b', // red-800
@@ -87,6 +98,7 @@ export const COLORS = {
   INFO: '#2563eb', // blue-600
 } as const;
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export const BREAKPOINTS = {
   SM: 640,
   MD: 768,
@@ -94,3 +106,5 @@ export const BREAKPOINTS = {
   XL: 1280,
   '2XL': 1536,
 } as const;
+
+// ✔️ Protegido com AIDEV-PROTECTED

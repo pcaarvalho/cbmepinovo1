@@ -1,9 +1,11 @@
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 import { NextRequest } from 'next/server';
 
 // ==============================================================================
 // TIPOS E INTERFACES
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 interface RateLimitConfig {
   windowMs: number;
   maxRequests: number;
@@ -13,6 +15,7 @@ interface RateLimitConfig {
   message?: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 interface RateLimitResult {
   success: boolean;
   remaining: number;
@@ -20,6 +23,7 @@ interface RateLimitResult {
   message?: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 interface RateLimitStore {
   [key: string]: {
     count: number;
@@ -31,6 +35,7 @@ interface RateLimitStore {
 // IMPLEMENTAÇÃO DE RATE LIMITING EM MEMÓRIA
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 class InMemoryRateLimit {
   private store: RateLimitStore = {};
   private cleanupInterval: NodeJS.Timeout;
@@ -42,6 +47,7 @@ class InMemoryRateLimit {
     }, 5 * 60 * 1000);
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   private cleanup(): void {
     const now = Date.now();
     
@@ -52,6 +58,7 @@ class InMemoryRateLimit {
     });
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async check(key: string, config: RateLimitConfig): Promise<RateLimitResult> {
     const now = Date.now();
     const resetTime = now + config.windowMs;
@@ -86,6 +93,7 @@ class InMemoryRateLimit {
     };
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   destroy(): void {
     if (this.cleanupInterval) {
       clearInterval(this.cleanupInterval);
@@ -97,6 +105,7 @@ class InMemoryRateLimit {
 // IMPLEMENTAÇÃO COM REDIS (OPCIONAL)
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 class RedisRateLimit {
   private client: any;
 
@@ -104,6 +113,7 @@ class RedisRateLimit {
     this.client = redisClient;
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async check(key: string, config: RateLimitConfig): Promise<RateLimitResult> {
     const now = Date.now();
     const window = Math.floor(now / config.windowMs);
@@ -149,8 +159,10 @@ class RedisRateLimit {
 // FACTORY E INSTÂNCIA GLOBAL
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 let rateLimitInstance: InMemoryRateLimit | RedisRateLimit;
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 function createRateLimitInstance(): InMemoryRateLimit | RedisRateLimit {
   // Tentar usar Redis se disponível
   const redisUrl = process.env.REDIS_URL;
@@ -177,6 +189,7 @@ function createRateLimitInstance(): InMemoryRateLimit | RedisRateLimit {
 // FUNÇÃO PRINCIPAL DE RATE LIMITING
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export async function rateLimit(
   request: NextRequest,
   config: RateLimitConfig
@@ -199,6 +212,7 @@ export async function rateLimit(
 // FUNÇÕES AUXILIARES
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 function getDefaultKey(request: NextRequest): string {
   // Tentar obter IP real considerando proxies
   const forwarded = request.headers.get('x-forwarded-for');
@@ -215,6 +229,7 @@ function getDefaultKey(request: NextRequest): string {
 // CONFIGURAÇÕES PRÉ-DEFINIDAS
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export const rateLimitConfigs = {
   // API de busca (mais restritiva)
   search: {
@@ -249,6 +264,7 @@ export const rateLimitConfigs = {
 // MIDDLEWARE HELPER
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export function createRateLimitMiddleware(config: RateLimitConfig) {
   return async (request: NextRequest) => {
     const result = await rateLimit(request, config);
@@ -281,6 +297,7 @@ export function createRateLimitMiddleware(config: RateLimitConfig) {
 // CLEANUP NA FINALIZAÇÃO DA APLICAÇÃO
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 if (typeof process !== 'undefined') {
   process.on('SIGTERM', () => {
     if (rateLimitInstance && 'destroy' in rateLimitInstance) {
@@ -288,3 +305,5 @@ if (typeof process !== 'undefined') {
     }
   });
 }
+
+// ✔️ Protegido com AIDEV-PROTECTED

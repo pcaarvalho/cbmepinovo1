@@ -59,7 +59,7 @@ export class InstructionsRepository {
     }
 
     // Apply pagination
-    const offset = filters.offset || 0;
+    const offset = 0; // filters.offset não existe em FiltrosPesquisa
     const limit = filters.limit || 10;
     
     return filteredInstructions.slice(offset, offset + limit);

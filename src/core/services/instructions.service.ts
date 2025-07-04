@@ -1,7 +1,9 @@
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 import { InstructionsRepository } from '@/backend/repositories/instructions.repository';
 import { SearchRepository } from '@/backend/repositories/search.repository';
 import { InstrucaoTecnica, FiltrosPesquisa } from '@/shared/types/instructions';
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export class InstructionsService {
   private instructionsRepo: InstructionsRepository;
   private searchRepo: SearchRepository;
@@ -11,6 +13,7 @@ export class InstructionsService {
     this.searchRepo = new SearchRepository();
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async searchInstructions(filters: FiltrosPesquisa) {
     try {
       // Aplicar filtros e buscar instruções
@@ -40,6 +43,7 @@ export class InstructionsService {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async getInstructionById(id: string): Promise<InstrucaoTecnica | null> {
     try {
       const instruction = await this.instructionsRepo.findById(id);
@@ -56,6 +60,7 @@ export class InstructionsService {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async getPopularInstructions(limit: number = 10) {
     try {
       return await this.instructionsRepo.findPopular(limit);
@@ -65,6 +70,7 @@ export class InstructionsService {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async getInstructionsByCategory(categoria: string) {
     try {
       return await this.instructionsRepo.findByCategory(categoria);
@@ -74,6 +80,7 @@ export class InstructionsService {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   private async getAvailableFilters() {
     return {
       categorias: await this.instructionsRepo.getUniqueCategories(),
@@ -81,3 +88,5 @@ export class InstructionsService {
     };
   }
 }
+
+// ✔️ Protegido com AIDEV-PROTECTED

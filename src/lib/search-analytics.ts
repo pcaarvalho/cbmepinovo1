@@ -1,3 +1,4 @@
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 /**
  * Sistema de Analytics e Histórico Inteligente de Busca
  * 
@@ -9,11 +10,13 @@
  * - Cache local para performance
  */
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 // Função para gerar UUIDs simples
 function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 // Tipos para o sistema de analytics
 export interface SearchContext {
   userId?: string;
@@ -73,6 +76,7 @@ export interface SearchTerm {
   relatedTerms: string[];
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 /**
  * Classe principal para gerenciamento de analytics de busca
  */
@@ -81,6 +85,7 @@ export class SearchAnalytics {
   private cacheExpiry = new Map<string, number>();
   private readonly CACHE_TTL = 5 * 60 * 1000; // 5 minutos
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   /**
    * Registra uma nova busca no sistema
    */
@@ -110,6 +115,7 @@ export class SearchAnalytics {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   /**
    * Registra clique em resultado de busca
    */
@@ -136,6 +142,7 @@ export class SearchAnalytics {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   /**
    * Obtém histórico de buscas do usuário com agrupamento inteligente
    */
@@ -165,6 +172,7 @@ export class SearchAnalytics {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   /**
    * Obtém sugestões inteligentes baseadas no contexto
    */
@@ -593,6 +601,8 @@ export class SearchAnalytics {
     this.cacheExpiry.set(key, Date.now() + this.CACHE_TTL);
   }
 }
+
+// ✔️ Protegido com AIDEV-PROTECTED
 
 // Instância singleton para uso global
 export const searchAnalytics = new SearchAnalytics();

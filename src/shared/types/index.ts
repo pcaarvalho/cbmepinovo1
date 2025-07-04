@@ -1,7 +1,9 @@
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 // ==============================================================================
 // CORE DOMAIN TYPES
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface InstrucaoTecnica {
   id: string;
   numero: string;
@@ -32,6 +34,7 @@ export interface InstrucaoTecnica {
   updatedAt: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface CategoriaIT {
   id: string;
   nome: string;
@@ -41,6 +44,7 @@ export interface CategoriaIT {
   subcategorias?: SubcategoriaIT[];
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface SubcategoriaIT {
   id: string;
   nome: string;
@@ -48,6 +52,7 @@ export interface SubcategoriaIT {
   count: number;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface ResultadoAnalise {
   id: string;
   nomeArquivo: string;
@@ -71,6 +76,7 @@ export interface ResultadoAnalise {
   updatedAt: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface ItemVerificacao {
   id: string;
   item: string;
@@ -90,6 +96,7 @@ export interface ItemVerificacao {
 // AUTHENTICATION & AUTHORIZATION TYPES
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface User {
   id: string;
   email: string;
@@ -108,6 +115,7 @@ export interface User {
   updatedAt: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface Organization {
   id: string;
   name: string;
@@ -121,6 +129,7 @@ export interface Organization {
   updatedAt: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface OrganizationSettings {
   features: {
     analytics: boolean;
@@ -141,6 +150,7 @@ export interface OrganizationSettings {
   };
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface Role {
   id: string;
   name: string;
@@ -152,6 +162,7 @@ export interface Role {
   updatedAt: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface UserRole {
   id: string;
   userId: string;
@@ -160,6 +171,7 @@ export interface UserRole {
   createdAt: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface Permission {
   id: string;
   name: string;
@@ -168,6 +180,7 @@ export interface Permission {
   action: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface Session {
   id: string;
   userId: string;
@@ -182,6 +195,7 @@ export interface Session {
 // SEARCH & FILTERING TYPES
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface FiltrosPesquisa {
   categoria?: string;
   subcategoria?: string;
@@ -200,6 +214,7 @@ export interface FiltrosPesquisa {
   sortOrder?: 'asc' | 'desc';
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface SearchResult<T = unknown> {
   items: T[];
   pagination: {
@@ -223,6 +238,7 @@ export interface SearchResult<T = unknown> {
 // INTELLIGENT SEARCH TYPES (OpenRouter Integration)
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface SearchResponse {
   query_understood: string;
   intent: 'navigation' | 'information' | 'action' | 'support';
@@ -233,6 +249,7 @@ export interface SearchResponse {
   confidence: number;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface SearchFacet {
   field: string;
   label: string;
@@ -243,6 +260,7 @@ export interface SearchFacet {
   }>;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface FilterOption {
   value: string;
   label: string;
@@ -253,6 +271,7 @@ export interface FilterOption {
 // COLLABORATION TYPES
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface Comment {
   id: string;
   content: string;
@@ -267,6 +286,7 @@ export interface Comment {
   updatedAt: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface Annotation {
   id: string;
   content: string;
@@ -280,6 +300,7 @@ export interface Annotation {
   updatedAt: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface AnnotationPosition {
   page: number;
   x: number;
@@ -288,6 +309,7 @@ export interface AnnotationPosition {
   height: number;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface Favorite {
   id: string;
   userId: string;
@@ -300,6 +322,7 @@ export interface Favorite {
 // NOTIFICATION TYPES
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface Notification {
   id: string;
   title: string;
@@ -311,6 +334,7 @@ export interface Notification {
   createdAt: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface Subscription {
   id: string;
   type: SubscriptionType;
@@ -324,6 +348,7 @@ export interface Subscription {
 // ANALYTICS & MONITORING TYPES
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface AuditLog {
   id: string;
   action: string;
@@ -340,6 +365,7 @@ export interface AuditLog {
   createdAt: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface Analytics {
   id: string;
   event: string;
@@ -351,6 +377,7 @@ export interface Analytics {
   createdAt: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface HealthCheck {
   id: string;
   service: string;
@@ -360,6 +387,7 @@ export interface HealthCheck {
   createdAt: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface SystemMetrics {
   timestamp: string;
   cpu: {
@@ -393,6 +421,7 @@ export interface SystemMetrics {
 // API TYPES
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;
@@ -408,6 +437,7 @@ export interface ApiResponse<T = unknown> {
   };
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface ApiPaginatedResponse<T = unknown> extends ApiResponse<T[]> {
   pagination: {
     page: number;
@@ -419,6 +449,7 @@ export interface ApiPaginatedResponse<T = unknown> extends ApiResponse<T[]> {
   };
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface WebSocketMessage {
   type: string;
   payload: Record<string, unknown>;
@@ -431,6 +462,7 @@ export interface WebSocketMessage {
 // FORM TYPES
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface FormState<T = Record<string, unknown>> {
   data: T;
   errors: Record<string, string>;
@@ -440,6 +472,7 @@ export interface FormState<T = Record<string, unknown>> {
   touchedFields: Record<string, boolean>;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export interface FileUploadState {
   file?: File;
   progress: number;
@@ -452,6 +485,7 @@ export interface FileUploadState {
 // ENUMS
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export enum AnalysisStatus {
   PENDING = 'PENDING',
   PROCESSING = 'PROCESSING',
@@ -460,6 +494,7 @@ export enum AnalysisStatus {
   CANCELLED = 'CANCELLED'
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export enum VerificationResult {
   CONFORME = 'CONFORME',
   NAO_CONFORME = 'NAO_CONFORME',
@@ -468,6 +503,7 @@ export enum VerificationResult {
   PENDENTE = 'PENDENTE'
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export enum Severity {
   LOW = 'LOW',
   MEDIUM = 'MEDIUM',
@@ -475,6 +511,7 @@ export enum Severity {
   CRITICAL = 'CRITICAL'
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export enum NotificationType {
   INFO = 'INFO',
   WARNING = 'WARNING',
@@ -483,6 +520,7 @@ export enum NotificationType {
   SYSTEM = 'SYSTEM'
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export enum SubscriptionType {
   NEW_INSTRUCTION = 'NEW_INSTRUCTION',
   INSTRUCTION_UPDATE = 'INSTRUCTION_UPDATE',
@@ -490,20 +528,23 @@ export enum SubscriptionType {
   SYSTEM_ALERT = 'SYSTEM_ALERT'
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export enum HealthStatus {
   HEALTHY = 'HEALTHY',
   DEGRADED = 'DEGRADED',
   DOWN = 'DOWN'
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export enum UserRoleType {
   SUPER_ADMIN = 'SUPER_ADMIN',
   ORG_ADMIN = 'ORG_ADMIN',
   MANAGER = 'MANAGER',
-  ANALYST = 'ANALYST', 
+  ANALYST = 'ANALYST',
   VIEWER = 'VIEWER'
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export enum PermissionType {
   // Instructions
   INSTRUCTIONS_READ = 'INSTRUCTIONS_READ',
@@ -530,3 +571,5 @@ export enum PermissionType {
   SYSTEM_CONFIG = 'SYSTEM_CONFIG',
   AUDIT_LOGS = 'AUDIT_LOGS'
 }
+
+// ✔️ Protegido com AIDEV-PROTECTED

@@ -1,5 +1,7 @@
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 import { VerificationResult, Severity, ItemVerificacao } from '@/types';
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 // Padrões regex avançados para extração de dados técnicos
 export const ADVANCED_PATTERNS = {
   // Responsável Técnico - captura nome, profissão e registro
@@ -78,6 +80,7 @@ export const ADVANCED_PATTERNS = {
   }
 };
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 // Regras de conformidade específicas por IT
 export const COMPLIANCE_RULES = {
   'IT-001': {
@@ -308,6 +311,7 @@ export const COMPLIANCE_RULES = {
   }
 };
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 // Função auxiliar para criar ItemVerificacao
 function criarItem(
   id: string, 
@@ -329,6 +333,7 @@ function criarItem(
   };
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 // Função principal para executar todas as verificações
 export function executeComplianceRules(texto: string): ItemVerificacao[] {
   const resultados: ItemVerificacao[] = [];
@@ -380,3 +385,5 @@ export function getAnalysisStats(itens: ItemVerificacao[]) {
     conformidade
   };
 }
+
+// ✔️ Protegido com AIDEV-PROTECTED

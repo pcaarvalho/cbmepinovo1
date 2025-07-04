@@ -1,11 +1,14 @@
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 generator client {
   provider = "prisma-client-js"
   previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -15,6 +18,7 @@ datasource db {
 // AUDIT TRAIL & MULTI-TENANCY
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model Organization {
   id          String   @id @default(uuid())
   name        String
@@ -39,6 +43,7 @@ model Organization {
   @@map("organizations")
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model User {
   id            String    @id @default(uuid())
   email         String    @unique
@@ -71,6 +76,7 @@ model User {
   @@map("users")
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model Role {
   id          String   @id @default(uuid())
   name        String
@@ -91,6 +97,7 @@ model Role {
   @@map("roles")
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model UserRole {
   id     String @id @default(uuid())
   userId String
@@ -105,6 +112,7 @@ model UserRole {
   @@map("user_roles")
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model Session {
   id        String   @id @default(uuid())
   userId    String
@@ -123,6 +131,7 @@ model Session {
 // CORE DOMAIN MODELS
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model InstrucaoTecnica {
   id              String   @id @default(uuid())
   numero          String
@@ -169,6 +178,7 @@ model InstrucaoTecnica {
   @@map("instrucoes_tecnicas")
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model ResultadoAnalise {
   id               String   @id @default(uuid())
   nomeArquivo      String
@@ -201,6 +211,7 @@ model ResultadoAnalise {
   @@map("resultados_analise")
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model ItemVerificacao {
   id           String            @id @default(uuid())
   item         String
@@ -225,6 +236,7 @@ model ItemVerificacao {
 // COLLABORATION & SOCIAL FEATURES
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model Comment {
   id        String   @id @default(uuid())
   content   String   @db.Text
@@ -249,6 +261,7 @@ model Comment {
   @@map("comments")
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model Annotation {
   id        String   @id @default(uuid())
   content   String   @db.Text
@@ -268,6 +281,7 @@ model Annotation {
   @@map("annotations")
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model Favorite {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
@@ -286,6 +300,7 @@ model Favorite {
 // NOTIFICATIONS & SUBSCRIPTIONS
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model Notification {
   id        String           @id @default(uuid())
   title     String
@@ -301,6 +316,7 @@ model Notification {
   @@map("notifications")
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model Subscription {
   id        String             @id @default(uuid())
   type      SubscriptionType
@@ -318,6 +334,7 @@ model Subscription {
 // ANALYTICS & MONITORING
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model AuditLog {
   id         String    @id @default(uuid())
   action     String
@@ -341,6 +358,7 @@ model AuditLog {
   @@map("audit_logs")
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model Analytics {
   id        String   @id @default(uuid())
   event     String
@@ -360,6 +378,7 @@ model Analytics {
 // SEARCH ANALYTICS & HISTORY
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model SearchHistory {
   id            String   @id @default(uuid())
   query         String
@@ -392,6 +411,7 @@ model SearchHistory {
   @@map("search_history")
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model SearchGroup {
   id          String   @id @default(uuid())
   topic       String   // Tópico identificado (ex: "saidas_emergencia", "iluminacao")
@@ -415,6 +435,7 @@ model SearchGroup {
   @@map("search_groups")
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model SearchTerm {
   id            String   @id @default(uuid())
   term          String   @unique
@@ -437,6 +458,7 @@ model SearchTerm {
   @@map("search_terms")
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model SearchSuggestion {
   id          String              @id @default(uuid())
   query       String
@@ -458,6 +480,7 @@ model SearchSuggestion {
 // SYSTEM CONFIGURATION
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model SystemConfig {
   id        String   @id @default(uuid())
   key       String   @unique
@@ -467,6 +490,7 @@ model SystemConfig {
   @@map("system_config")
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 model HealthCheck {
   id        String           @id @default(uuid())
   service   String
@@ -483,6 +507,7 @@ model HealthCheck {
 // ENUMS
 // ==============================================================================
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 enum AnalysisStatus {
   PENDING
   PROCESSING
@@ -491,6 +516,7 @@ enum AnalysisStatus {
   CANCELLED
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 enum VerificationResult {
   CONFORME
   NAO_CONFORME
@@ -499,6 +525,7 @@ enum VerificationResult {
   PENDENTE
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 enum Severity {
   LOW
   MEDIUM
@@ -506,6 +533,7 @@ enum Severity {
   CRITICAL
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 enum NotificationType {
   INFO
   WARNING
@@ -514,6 +542,7 @@ enum NotificationType {
   SYSTEM
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 enum SubscriptionType {
   NEW_INSTRUCTION
   INSTRUCTION_UPDATE
@@ -521,16 +550,20 @@ enum SubscriptionType {
   SYSTEM_ALERT
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 enum HealthStatus {
   HEALTHY
   DEGRADED
   DOWN
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 enum SearchSuggestionType {
   AUTOCOMPLETE
-  RELATED_SEARCH
-  POPULAR_TERM
+  RELATED
+  POPULAR
   CONTEXTUAL
-  TYPO_CORRECTION
+  TYPO
 }
+
+// ✔️ Protegido com AIDEV-PROTECTED

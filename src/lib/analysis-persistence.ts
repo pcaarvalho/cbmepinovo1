@@ -1,11 +1,14 @@
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 import { PrismaClient } from '@prisma/client';
 import { ItemVerificacao, AnalysisStatus, VerificationResult, Severity } from '@/types';
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 // Instância global do Prisma (padrão Next.js)
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 const prisma = globalForPrisma.prisma ?? new PrismaClient();
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
@@ -26,6 +29,7 @@ export interface AnalysisResultData {
   organizationId?: string;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 /**
  * Salva resultado de análise no banco de dados
  */
@@ -136,6 +140,7 @@ export async function saveAnalysisResult(data: AnalysisResultData): Promise<stri
   }
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 /**
  * Recupera resultado de análise do banco de dados
  */
@@ -409,7 +414,10 @@ export async function getAnalysisStatistics(
   }
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 // Cleanup de conexões (importante para Next.js)
 export async function disconnectPrisma(): Promise<void> {
   await prisma.$disconnect();
 }
+
+// ✔️ Protegido com AIDEV-PROTECTED

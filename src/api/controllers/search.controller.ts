@@ -1,6 +1,8 @@
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 import { NextRequest, NextResponse } from 'next/server';
 import { SearchService } from '@/backend/services/search.service';
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export class SearchController {
   private searchService: SearchService;
 
@@ -8,6 +10,7 @@ export class SearchController {
     this.searchService = new SearchService();
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async search(request: NextRequest) {
     try {
       const body = await request.json();
@@ -32,6 +35,7 @@ export class SearchController {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async getSuggestions(request: NextRequest) {
     try {
       const searchParams = request.nextUrl.searchParams;
@@ -52,12 +56,14 @@ export class SearchController {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async aiSearch(request: NextRequest) {
     try {
       const body = await request.json();
       const { prompt, searchTerm, filters, options } = body;
 
       const result = await this.searchService.performAISearch({
+        query: searchTerm,
         prompt,
         searchTerm,
         filters,
@@ -77,3 +83,5 @@ export class SearchController {
     }
   }
 }
+
+// ✔️ Protegido com AIDEV-PROTECTED

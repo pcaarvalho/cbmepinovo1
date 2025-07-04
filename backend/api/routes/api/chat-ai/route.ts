@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { callOpenRouterAPI } from '@/lib/openrouter-config';
+import { callOpenRouterAPI } from '@/infrastructure/ai/openrouter-config';
 import { todasInstrucoes } from '@/lib/data';
 import { instrucoesTecnicas } from '@/lib/instrucoes-scraped';
 

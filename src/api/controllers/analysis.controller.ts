@@ -1,6 +1,8 @@
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 import { NextRequest, NextResponse } from 'next/server';
 import { AnalysisService } from '@/backend/services/analysis.service';
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export class AnalysisController {
   private analysisService: AnalysisService;
 
@@ -8,6 +10,7 @@ export class AnalysisController {
     this.analysisService = new AnalysisService();
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async analyzeDocument(request: NextRequest) {
     try {
       const formData = await request.formData();
@@ -35,6 +38,7 @@ export class AnalysisController {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async getAnalysisHistory(request: NextRequest) {
     try {
       const searchParams = request.nextUrl.searchParams;
@@ -61,6 +65,7 @@ export class AnalysisController {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async getAnalysisById(request: NextRequest, id: string) {
     try {
       const analysis = await this.analysisService.getAnalysisById(id);
@@ -85,3 +90,5 @@ export class AnalysisController {
     }
   }
 }
+
+// ✔️ Protegido com AIDEV-PROTECTED

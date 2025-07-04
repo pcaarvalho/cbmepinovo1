@@ -58,6 +58,7 @@ export class SearchController {
       const { prompt, searchTerm, filters, options } = body;
 
       const result = await this.searchService.performAISearch({
+        query: searchTerm,
         prompt,
         searchTerm,
         filters,

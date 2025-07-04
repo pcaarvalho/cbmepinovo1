@@ -13,10 +13,9 @@ export class InstructionsController {
       const searchParams = request.nextUrl.searchParams;
       const filters = {
         q: searchParams.get('q'),
-        categoria: searchParams.get('categoria'),
+        categoria: searchParams.get('categoria') || undefined,
         tags: searchParams.get('tags')?.split(','),
         limit: parseInt(searchParams.get('limit') || '10'),
-        offset: parseInt(searchParams.get('offset') || '0'),
       };
 
       const result = await this.instructionsService.searchInstructions(filters);

@@ -54,12 +54,12 @@ export class ComplianceEngine {
       id: `item_${startId}`,
       item: 'Presença de saídas de emergência',
       resultado: lowerText.includes('saída') && lowerText.includes('emergência') 
-        ? 'CONFORME' : 'NAO_CONFORME',
+        ? VerificationResult.CONFORME : VerificationResult.NAO_CONFORME,
       observacao: lowerText.includes('saída') && lowerText.includes('emergência')
         ? 'Saídas de emergência identificadas no projeto'
         : 'Não foi possível identificar saídas de emergência no memorial',
       itReferencia: 'IT-008/2019',
-      severidade: 'CRITICAL',
+      severidade: Severity.CRITICAL,
       sugestao: 'Verificar dimensionamento e quantidade adequada conforme IT-008',
       analiseId: 'current',
       createdAt: new Date().toISOString(),
@@ -80,7 +80,7 @@ export class ComplianceEngine {
         ? `Largura encontrada: ${widthMatches.join(', ')}`
         : 'Largura das saídas não especificada',
       itReferencia: 'IT-008/2019',
-      severidade: 'HIGH',
+      severidade: Severity.HIGH,
       sugestao: 'Largura mínima de 1,20m para escadas de emergência',
       analiseId: 'current',
       createdAt: new Date().toISOString(),
@@ -101,7 +101,7 @@ export class ComplianceEngine {
         ? 'Sistema de extintores previsto no projeto'
         : 'Sistema de extintores não identificado',
       itReferencia: 'IT-021/2019',
-      severidade: 'HIGH',
+      severidade: Severity.HIGH,
       sugestao: 'Verificar tipos adequados e posicionamento conforme IT-021',
       analiseId: 'current',
       createdAt: new Date().toISOString(),
@@ -122,7 +122,7 @@ export class ComplianceEngine {
         ? `Distância encontrada: ${distanceMatches.join(', ')}`
         : 'Distância entre extintores não especificada claramente',
       itReferencia: 'IT-021/2019',
-      severidade: 'MEDIUM',
+      severidade: Severity.MEDIUM,
       sugestao: 'Distância máxima de 25m entre extintores para área comercial',
       analiseId: 'current',
       createdAt: new Date().toISOString(),
@@ -139,12 +139,12 @@ export class ComplianceEngine {
       id: `item_${startId}`,
       item: 'Iluminação de emergência',
       resultado: (lowerText.includes('iluminação') && lowerText.includes('emergência')) 
-        ? 'CONFORME' : 'NAO_CONFORME',
+        ? VerificationResult.CONFORME : VerificationResult.NAO_CONFORME,
       observacao: (lowerText.includes('iluminação') && lowerText.includes('emergência'))
         ? 'Sistema de iluminação de emergência previsto'
         : 'Sistema de iluminação de emergência não identificado',
       itReferencia: 'IT-018/2019',
-      severidade: 'HIGH',
+      severidade: Severity.HIGH,
       sugestao: 'Verificar autonomia mínima e níveis de iluminamento conforme IT-018',
       analiseId: 'current',
       createdAt: new Date().toISOString(),
@@ -165,7 +165,7 @@ export class ComplianceEngine {
         ? `Autonomia especificada: ${autonomyMatches.join(', ')}`
         : 'Autonomia da iluminação não especificada',
       itReferencia: 'IT-018/2019',
-      severidade: 'MEDIUM',
+      severidade: Severity.MEDIUM,
       sugestao: 'Autonomia mínima de 1 hora conforme IT-018',
       analiseId: 'current',
       createdAt: new Date().toISOString(),
@@ -186,7 +186,7 @@ export class ComplianceEngine {
         ? 'Sistema de hidrantes previsto no projeto'
         : 'Sistema de hidrantes não aplicável ou não especificado',
       itReferencia: 'IT-022/2019',
-      severidade: 'MEDIUM',
+      severidade: Severity.MEDIUM,
       sugestao: 'Verificar pressão e vazão adequadas conforme IT-022',
       analiseId: 'current',
       createdAt: new Date().toISOString(),
@@ -203,7 +203,7 @@ export class ComplianceEngine {
       id: `item_${startId}`,
       item: 'Identificação dos dados do projeto',
       resultado: (lowerText.includes('área') && lowerText.includes('pavimento')) 
-        ? 'CONFORME' : 'PARCIAL',
+        ? VerificationResult.CONFORME : VerificationResult.PARCIAL,
       observacao: 'Dados básicos do projeto identificados no memorial',
       itReferencia: 'IT-001/2019',
       severidade: 'LOW',
@@ -216,12 +216,12 @@ export class ComplianceEngine {
       id: `item_${startId + 1}`,
       item: 'Referência às normas técnicas',
       resultado: lowerText.includes('it-') || lowerText.includes('cb-pi') 
-        ? 'CONFORME' : 'NAO_CONFORME',
+        ? VerificationResult.CONFORME : VerificationResult.NAO_CONFORME,
       observacao: lowerText.includes('it-') || lowerText.includes('cb-pi')
         ? 'Referências às normas do CB-PI identificadas'
         : 'Faltam referências às instruções técnicas do CB-PI',
       itReferencia: 'IT-001/2019',
-      severidade: 'MEDIUM',
+      severidade: Severity.MEDIUM,
       sugestao: 'Citar todas as ITs aplicáveis ao projeto',
       analiseId: 'current',
       createdAt: new Date().toISOString(),

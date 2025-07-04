@@ -1,6 +1,8 @@
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 import { InstrucaoTecnica, ItemVerificacao, VerificationResult, Severity } from '@/types';
-import { ExtractedContent } from './pdf-extractor';
+import { ExtractedContent } from '@/infrastructure/storage/pdf-extractor';
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 // Sistema de embeddings simplificado para análise semântica
 interface SemanticVector {
   terms: Record<string, number>;
@@ -15,6 +17,7 @@ interface SemanticMatch {
   sections: string[];
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 // Termos técnicos relevantes para cada categoria de IT
 const TECHNICAL_TERMS = {
   'procedimentos': [
@@ -290,6 +293,7 @@ function getTechnicalRequirements(categoria: string): string {
   return requirements[categoria.toLowerCase()] || 'requisitos técnicos específicos';
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 /**
  * Função principal de análise semântica avançada
  */
@@ -341,6 +345,7 @@ export async function performAdvancedSemanticAnalysis(
   return semanticItems;
 }
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 /**
  * Análise contextual específica por tipo de documento
  */
@@ -399,3 +404,5 @@ export function analyzeDocumentContext(content: ExtractedContent): {
     qualityScore: Math.round(qualityScore)
   };
 }
+
+// ✔️ Protegido com AIDEV-PROTECTED

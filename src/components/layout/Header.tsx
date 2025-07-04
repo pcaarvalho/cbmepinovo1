@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Search, BookOpen, FileCheck, Library, HelpCircle } from 'lucide-react';
+import { Search, BookOpen, FileCheck, Library, HelpCircle, Calculator } from 'lucide-react';
 import IntelligentSearchBar from '@/components/ui/IntelligentSearchBar';
 
 const navigationItems = [
@@ -17,8 +17,18 @@ const navigationItems = [
     icon: FileCheck
   },
   {
+    href: '/calculadora',
+    label: 'Calculadora',
+    icon: Calculator
+  },
+  {
+    href: '/instrucoes',
+    label: 'Instruções Técnicas',
+    icon: BookOpen
+  },
+  {
     href: '/biblioteca',
-    label: 'Biblioteca (105 ITs)',
+    label: 'Biblioteca',
     icon: Library
   },
   {
@@ -59,8 +69,8 @@ export default function Header() {
               <span className="text-white font-bold text-sm">CB</span>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">CB-PI</h1>
-              <p className="text-xs text-gray-600">Instruções Técnicas</p>
+              <h1 className="text-xl font-bold text-gray-900">CBMEPI</h1>
+              <p className="text-xs text-gray-600">Assistente de ITs</p>
             </div>
           </Link>
 

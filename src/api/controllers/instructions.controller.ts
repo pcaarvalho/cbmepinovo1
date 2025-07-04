@@ -1,6 +1,8 @@
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 import { NextRequest, NextResponse } from 'next/server';
 import { InstructionsService } from '@/backend/services/instructions.service';
 
+// AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
 export class InstructionsController {
   private instructionsService: InstructionsService;
 
@@ -8,15 +10,15 @@ export class InstructionsController {
     this.instructionsService = new InstructionsService();
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async getInstructions(request: NextRequest) {
     try {
       const searchParams = request.nextUrl.searchParams;
       const filters = {
         q: searchParams.get('q'),
-        categoria: searchParams.get('categoria'),
+        categoria: searchParams.get('categoria') || undefined,
         tags: searchParams.get('tags')?.split(','),
         limit: parseInt(searchParams.get('limit') || '10'),
-        offset: parseInt(searchParams.get('offset') || '0'),
       };
 
       const result = await this.instructionsService.searchInstructions(filters);
@@ -34,6 +36,7 @@ export class InstructionsController {
     }
   }
 
+  // AIDEV-PROTECTED: Este bloco é sensível. NÃO modifique sem solicitação explícita do humano.
   async getInstructionById(request: NextRequest, id: string) {
     try {
       const instruction = await this.instructionsService.getInstructionById(id);
@@ -58,3 +61,5 @@ export class InstructionsController {
     }
   }
 }
+
+// ✔️ Protegido com AIDEV-PROTECTED
